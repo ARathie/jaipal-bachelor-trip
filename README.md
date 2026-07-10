@@ -3,7 +3,7 @@
 Static site, two standalone pages, no build step:
 
 - **`index.html`** — the homepage the group sees: countdown, updates, and — once the destination is booked — the full plan.
-- **`destination-choices/index.html`** — the destination-options page for the decision: twelve candidates with photos, day/night outlines, costs, scores, and trade-offs, in a carousel layout. Passphrase-gated on top of an unlisted URL; not linked from anywhere.
+- **`destination-choices/index.html`** — the destination-options page for the decision: the current shortlist with photos, day/night outlines, costs, scores, and trade-offs, in a carousel layout, plus the earlier archived list behind an Archive toggle. Passphrase-gated on top of an unlisted URL; not linked from anywhere.
 
 ## Deploy (GitHub Pages)
 Settings → Pages → Source: "Deploy from a branch" → pick the branch, folder `/ (root)` → Save.
