@@ -2,22 +2,22 @@
 
 Static site, two standalone pages, no build step:
 
-- **`index.html`** — Trip HQ. The homepage the crew sees: countdown, updates, and — once the destination is locked — the full itinerary. Shows "awaiting the call" until then.
-- **`nm81634cuxhnpb/index.html`** — the candidate dossier: every trip option with status, cost, A/F/S scores, gates, flags, and build outline. For the groom + best man only. Not linked from anywhere; passphrase-gated on top of the unlisted URL.
+- **`index.html`** — the homepage the group sees: countdown, updates, and — once the destination is booked — the full plan.
+- **`destination-choices/index.html`** — the destination-options page for the decision: twelve candidates with photos, day/night outlines, costs, scores, and trade-offs, in a carousel layout. Passphrase-gated on top of an unlisted URL; not linked from anywhere.
 
 ## Deploy (GitHub Pages)
 Settings → Pages → Source: "Deploy from a branch" → pick the branch, folder `/ (root)` → Save.
-Site: `https://arathie.github.io/jaipal-bachelor-trip/` (live in ~1 minute). The dossier deploys with it at its own path.
+Site: `https://arathie.github.io/jaipal-bachelor-trip/` (live in ~1 minute). The options page deploys with it at its own path.
 
 ## Privacy model — read this before sharing links
-- The dossier gate is **client-side and cosmetic** — it deters casual visitors, it does not secure anything. The repo and both pages are public. Obscurity (random path) + passphrase is the model, by explicit choice.
-- Don't put anything on this site you couldn't survive the crew finding.
-- `noindex` meta is set on both pages, so search engines are told to ignore them.
-- Share the homepage link freely with the crew; the dossier URL goes to the decision team only.
+- The options-page gate is **client-side and cosmetic** — it deters casual visitors, it does not secure anything. The repo and both pages are public. Unlisted path + passphrase is the model, by explicit choice.
+- Don't put anything on this site you couldn't survive the group finding.
+- `noindex` meta is set on both pages.
+- Share the homepage link freely with the group; the options URL stays with the decision team.
 
 ## Editing content
 - Homepage: `CONFIG` block and `UPDATES` array in `index.html`.
-- Dossier: `TRIPS` and `UPDATES` arrays in `nm81634cuxhnpb/index.html`.
-- Decision day: see the runbook in `CLAUDE.md` — the winner gets pasted into the homepage; the dossier stays put.
+- Options: the `TRIPS` array in `destination-choices/index.html`. Photos live in `destination-choices/img/` (freely licensed only; attributions in `img/CREDITS.md`).
+- Decision day: see the runbook in `CLAUDE.md` — the winner gets pasted into the homepage; the options page stays put.
 
 Edit, commit, Pages redeploys automatically.

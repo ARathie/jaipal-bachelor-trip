@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Trip HQ — Sept 21–27, 2026</title>
+<title>Jaipal's Bachelor Trip — Sept 21–27, 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -16,9 +16,9 @@
   --contour:#C7C1AA;     /* hairlines, topo lines */
   --ink:#23281E;         /* deep olive-ink text */
   --ink-soft:#5A5F50;
-  --river:#31639C;       /* contender / links */
-  --blaze:#E8641B;       /* anchor / active markers ONLY */
-  --pine:#3E5C43;        /* backup / secondary */
+  --river:#31639C;       /* links / secondary accents */
+  --blaze:#E8641B;       /* active markers ONLY */
+  --pine:#3E5C43;        /* secondary */
   --display:"Big Shoulders Display", "Arial Narrow", sans-serif;
   --body:"Public Sans", system-ui, sans-serif;
   --mono:"IBM Plex Mono", ui-monospace, monospace;
@@ -56,6 +56,7 @@ h1 .r{color:var(--blaze)}
 .day{border:1.5px solid var(--ink);background:var(--bone-2);margin:12px 0;padding:14px 18px}
 .day .d{font-family:var(--mono);font-size:12px;color:var(--blaze);letter-spacing:.1em;text-transform:uppercase}
 .day p{margin-top:4px}
+.day p b{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
 .updates li{border-left:4px solid var(--river);background:var(--bone-2);padding:10px 14px;margin:10px 0;list-style:none;font-size:14.5px}
 .updates time{font-family:var(--mono);font-size:12px;color:var(--ink-soft);display:block}
 
@@ -70,8 +71,7 @@ footer b{color:var(--ink)}
 <!-- ================= CONFIG ================= -->
 <script>
 const CONFIG = {
-  // Decision day: paste the winning trip object here (see CLAUDE.md for the runbook).
-  // Until then it stays null and the page shows the countdown + updates feed.
+  // Set once the destination is booked; until then the page shows the countdown + updates.
   CHOSEN_TRIP: null,
   TRIP_START: "2026-09-21T09:00:00-04:00",
   UPDATED: "July 10, 2026"
@@ -79,8 +79,8 @@ const CONFIG = {
 </script>
 
 <header class="bar">
-  <div class="mark">Trip<span>▲</span>HQ</div>
-  <div class="meta">SEPT 21–27, 2026 · 10 RIDERS · $3K CAP<br>UPDATED <span id="updated"></span></div>
+  <div class="mark">Bachelor<span>▲</span>Trip</div>
+  <div class="meta">SEPT 21–27, 2026<br>UPDATED <span id="updated"></span></div>
 </header>
 
 <section class="hero">
@@ -100,15 +100,15 @@ const CONFIG = {
 </main>
 
 <footer>
-  <b>House rules:</b> Legit Audit enforced · wheels by day, whiskey by night · refundable bookings + trip insurance for all ·
-  decision by the groom and best man. This page is unlisted — don't forward the link.
+  Bookings will be refundable and trip insurance is included for everyone.
+  This page is unlisted — please don't share the link outside the group.
 </footer>
 
 <!-- ================= DATA ================= -->
 <script>
 const UPDATES = [
-  { d:"Jul 10, 2026", t:"Trip HQ goes live. The destination drops here the moment the call is made." },
-  { d:"Jul 8, 2026", t:"Intake form goes out to the crew. Deadline: July 15." }
+  { d:"Jul 10, 2026", t:"This site is up. The destination gets posted here as soon as it's booked." },
+  { d:"Jul 8, 2026", t:"Intake form went out to everyone — please fill it out by July 15." }
 ];
 </script>
 
@@ -121,23 +121,23 @@ const UPDATES = [
   const t = CONFIG.CHOSEN_TRIP;
   if (!t){
     $("#tripHero").innerHTML =
-      '<div class="eyebrow">Bachelor expedition · trip HQ</div>' +
-      '<h1>Awaiting<br>the <span class="r">call.</span></h1>' +
-      '<p class="sub">Destination classified until the groom and best man make the call. ' +
-      'Lock the week, get your intake form in, and watch this page — flights, itinerary, and marching orders land here.</p>' +
+      '<div class="eyebrow">Sept 21–27, 2026</div>' +
+      '<h1>Jaipal\'s<br>bachelor <span class="r">trip.</span></h1>' +
+      '<p class="sub">The destination is being decided now. Once it\'s booked, everything you need — flights, the day-by-day plan, what to pack — will be right here.</p>' +
       '<div class="countdown" id="cd"></div>';
   } else {
     $("#tripHero").innerHTML =
-      '<div class="eyebrow">It\'s official</div>' +
-      '<h1>'+t.name.replace(/ /g,"<br>")+'</h1>' +
+      '<div class="eyebrow">It\'s booked</div>' +
+      '<h1>'+(t.nameHTML || t.name)+'</h1>' +
       '<p class="sub">'+t.region+' · Sept 21–27, 2026 · '+t.flight+'</p>' +
       '<div class="countdown" id="cd"></div>';
   }
 
   $("#trip").style.display = "block";
   $("#tripBody").innerHTML =
-    (t ? '<h3 class="eyebrow" style="margin:26px 0 6px">The shape of it</h3>' +
-      t.build.map(b => { const i = b.indexOf(":"); return '<div class="day"><div class="d">'+ (i>0?b.slice(0,i):"") +'</div><p>'+ (i>0?b.slice(i+1).trim():b) +'</p></div>'; }).join("")
+    (t && t.days ? '<h3 class="eyebrow" style="margin:26px 0 6px">The plan (details coming as bookings land)</h3>' +
+      t.days.map(x => '<div class="day"><div class="d">'+x.d+'</div>' +
+        '<p><b>Day — </b>'+x.day+'</p>' + (x.night ? '<p><b>Night — </b>'+x.night+'</p>' : '') + '</div>').join("")
     : '') +
     '<h3 class="eyebrow" style="margin:26px 0 6px">Updates</h3><ul class="updates">' +
     UPDATES.map(u => '<li><time>'+u.d+'</time>'+u.t+'</li>').join("") + '</ul>';
