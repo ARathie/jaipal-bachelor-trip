@@ -87,9 +87,26 @@ h1 .r{color:var(--blaze)}
 .v-sec ul{list-style:none}
 .v-sec li{padding-left:14px;position:relative;margin:4px 0;font-size:14.5px}
 .v-sec li::before{content:"—";position:absolute;left:0;color:var(--status,var(--ink-soft))}
-.gauge{display:grid;grid-template-columns:86px 1fr 26px;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;margin:5px 0}
+.gauge{display:grid;grid-template-columns:104px 1fr 26px;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;margin:5px 0}
 .gauge .rail{height:8px;background:var(--bone);border:1px solid var(--contour);position:relative}
 .gauge .rail i{position:absolute;left:0;top:0;bottom:0;background:var(--status,var(--ink))}
+.scorenote{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);margin:6px 0 0}
+
+/* activity tags */
+.mods{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
+.mod{font-family:var(--mono);font-size:11.5px;padding:5px 10px;border:1.5px solid var(--ink);background:var(--bone-2)}
+.mod .lvl{letter-spacing:2px;margin-left:6px}
+.mod i{font-style:normal;color:var(--ink-soft)}
+.mod.m1{border-style:dashed}
+.mod.m0{border-style:dashed;color:var(--ink-soft);opacity:.75}
+
+/* pros / cons */
+.pc{display:grid;grid-template-columns:1fr;gap:0 28px}
+@media(min-width:640px){ .pc{grid-template-columns:1fr 1fr} }
+.pc ul{list-style:none}
+.pc li{padding-left:16px;position:relative;margin:5px 0;font-size:14.5px}
+.pc li.p::before{content:"+";position:absolute;left:0;color:var(--pine);font-weight:600}
+.pc li.c::before{content:"–";position:absolute;left:0;color:var(--ink-soft);font-weight:600}
 
 .dayrow{border:1.5px solid var(--ink);background:var(--bone-2);margin:10px 0;padding:12px 16px}
 .dayrow .d{font-family:var(--mono);font-size:12px;color:var(--blaze);letter-spacing:.1em;text-transform:uppercase}
@@ -174,10 +191,10 @@ const CONFIG = {
   <div class="hero-inner">
     <div class="eyebrow">Sept 21–27, 2026 · just for us while we decide</div>
     <h1>Where should<br>we <span class="r">go?</span></h1>
-    <p class="sub">The board after the pivot: every option is built on the same formula — a staffed villa,
-      a private chef, drinks on the beach, and one proper private boat day, with jet skis, fishing, ATVs and
-      snorkeling layered in where they're good. Costs are per person, all-in, flights included.
-      The earlier adventure list is still here under the archive toggle.</p>
+    <p class="sub">Narrowed to six. Every option is built on the same formula — a staffed villa, a private chef,
+      drinks on the beach, and one proper private boat day — and now scored on the five things that actually
+      differ: storm-risk, nightlife, activities, novelty, villa quality. Costs are per person, all-in, flights
+      included. Everything cut or archived along the way is under the archive toggle.</p>
     <div class="tally" id="tally"></div>
   </div>
 </section>
@@ -202,7 +219,17 @@ const CONFIG = {
 <script>
 const TRIPS = [
 { id:"aruba", name:"Aruba", region:"Malmok / Palm Beach, Aruba", status:"CONTENDER",
-  cost:[2300,2900], scores:{C:9,F:7,W:9}, flight:"Nonstops from JFK, BOS and CLT — everyone lands within an hour",
+  cost:[2300,2900], scores:{ST:9,NL:6,AC:8,NV:5,VQ:8}, flight:"Nonstops from JFK, BOS and CLT · ≈6–7h door-to-door",
+  villa:"Modern 5–6 bedroom private-pool villa in Malmok or Palm Beach at $800–1,400 a night, chef hired in.",
+  mods:[
+    { k:"Boat day", v:3, n:"private 65-ft cat — Antilla wreck" },
+    { k:"Jet skis", v:2, n:"Palm Beach" },
+    { k:"Deep-sea fishing", v:2, n:"wahoo, mahi, tuna" },
+    { k:"ATVs", v:1, n:"guided convoys only" },
+    { k:"Snorkeling", v:3, n:"the Antilla wreck" }
+  ],
+  pros:["Easiest group logistics going — JFK, Boston and Charlotte nonstops land within an hour of each other","September runs ~40% below winter for the same villas","The Antilla catamaran day is a proven, bookable centerpiece"],
+  cons:["ATVs are guided convoys only — no self-drive","Nightlife is a hotel strip and casinos, not a scene","Still September air — the heat is noticeable"],
   wow:"Outside the hurricane belt — no direct hit in recorded history — and September is the cheapest month of the year, so low-season money buys a staffed 5–6 bedroom villa in Malmok or Palm Beach with private-chef nights, on calm west-coast water.",
   second:"The boat day is a private 65-ft catamaran buyout: snorkel the Antilla — a 400-ft WWII wreck, the largest in the Caribbean — then Boca Catalina, open bar, sunset leg home. Every optional module is on the menu: Palm Beach jet skis, a UTV run to the Natural Pool, deep-sea charters for wahoo and mahi.",
   gates:["Passports"],
@@ -223,7 +250,17 @@ const TRIPS = [
   ] },
 
 { id:"cartagena", name:"Cartagena, Colombia", region:"Cartagena, Colombia", status:"CONTENDER",
-  cost:[1800,2400], scores:{C:9,F:9,W:8}, flight:"East Coast → Cartagena direct · ~$350–500",
+  cost:[1800,2400], scores:{ST:9,NL:9,AC:6,NV:6,VQ:8}, flight:"Nonstop ~5h from NYC/MIA · ≈7h door-to-door",
+  villa:"Staffed colonial casa with a rooftop plunge pool inside the walls, $700–1,400 a night — showpiece tier.",
+  mods:[
+    { k:"Boat day", v:3, n:"Rosarios yacht — Cholón sandbar" },
+    { k:"Jet skis", v:2, n:"at Cholón" },
+    { k:"Deep-sea fishing", v:2, n:"marina boats" },
+    { k:"ATVs", v:0, n:"no real scene" },
+    { k:"Snorkeling", v:1, n:"variable" }
+  ],
+  pros:["Best nightlife on the board, walkable from the casa","Cheapest luxury — the surplus buys a bigger yacht","The Cholón sandbar boat day is built for groups"],
+  cons:["Thinnest activity menu — no ATVs, snorkeling is mediocre","Good water requires the boat; the city beaches are poor","Most humid pick on the board"],
   wow:"Best value and best nightlife on the list, entirely outside the hurricane belt: a restored walled-city casa with a rooftop plunge pool and staff, and old-town nights that compete with anywhere.",
   second:"The boat day is a private yacht to the Rosario Islands — the Cholón sandbar or a beach-club takeover. Modules are the thin spot: jet skis at Cholón and marina sportfishing, but snorkeling is variable and there's no real ATV scene.",
   gates:["Passports"],
@@ -244,7 +281,17 @@ const TRIPS = [
   ] },
 
 { id:"cabo", name:"Cabo Villa Week", region:"Cabo San Lucas, Mexico", status:"CONTENDER",
-  cost:[2600,3400], scores:{C:9,F:8,W:8}, flight:"East Coast → SJD direct",
+  cost:[2600,3400], scores:{ST:3,NL:8,AC:10,NV:3,VQ:8}, flight:"JFK nonstop ~6.5h · ≈8–9h door-to-door",
+  villa:"$1,200–2,200 a night buys a very good 5–6 bedroom corridor villa; the famous Pedregal flagships run higher.",
+  mods:[
+    { k:"Boat day", v:3, n:"yacht to the Arch" },
+    { k:"Jet skis", v:2, n:"Médano Bay" },
+    { k:"Deep-sea fishing", v:3, n:"billfish capital" },
+    { k:"ATVs", v:3, n:"real dunes at Migriño" },
+    { k:"Snorkeling", v:2, n:"Chileno / Pelican Rock" }
+  ],
+  pros:["Deepest activity menu anywhere — billfish capital plus real dunes","The groom\'s own named example of the formula","Deep luxury-villa inventory and real nightlife"],
+  cons:["Worst storm odds on the board","Some venues run low-season schedules in September","Priciest all-in"],
   wow:"Low season is the deal window: staffed villas on the Pedregal cliffs (infinity pools over the Pacific) or the Palmilla corridor on the Sea of Cortez, at a fraction of winter rates — private chef, a yacht half-day, and offshore fishing with billfish season building.",
   second:"The deepest optional-activity menu of any option: Médano Bay jet skis, the billfish capital for deep-sea, real desert ATVs at Migriño, Chileno Bay snorkeling. Plus a Flora Farms dinner night and one downtown blowout.",
   gates:["Passports"],
@@ -263,50 +310,18 @@ const TRIPS = [
     { src:"img/cabo-3.jpg", alt:"Striped marlin brought boat-side off Cabo San Lucas before release", caption:"Striped marlin brought boat-side off Cabo San Lucas before release", credit:"Photo: Kate Crandell / Wikimedia Commons (via Flickr)" }
   ] },
 
-{ id:"casadecampo", name:"Casa de Campo", region:"La Romana, Dominican Republic", status:"CONTENDER",
-  cost:[2400,3000], scores:{C:10,F:6,W:8}, flight:"East Coast flights usually connect once",
-  wow:"A 7,000-acre resort built for groups like this: staffed villas with butler service standard (private chefs on the bigger villas or added on), top-100 ocean golf at Teeth of the Dog, a 245-acre sporting-clays center, marina charters, and a clifftop village with a late-night club — all inside one gate.",
-  second:"A boat day to Saona or Catalina Island from the resort's own marina, plus deep-sea boats, buggies, and the clays center — most of the module menu inside the gate.",
-  gates:["Passports"],
-  flags:["Full Caribbean hurricane exposure — same refundable-everything rule as Cabo","Flights usually connect once","Nightlife is resort-bound — the villa and Altos de Chavón carry it"],
-  fit:"Low-season value, and Teeth of the Dog just reopened from a year-long restoration. The weather rules above apply.",
-  days:[
-    { d:"Day 1", day:"Land, villa check-in, golf carts assigned.", night:"Chef dinner at the villa." },
-    { d:"Day 2", day:"Teeth of the Dog for the golfers, sporting clays for the rest.", night:"Dinner up in Altos de Chavón, drinks on the cliff edge." },
-    { d:"Day 3", day:"Boat day — Saona or Catalina Island.", night:"Marina dinner." },
-    { d:"Day 4", day:"Swap day — golf, clays, or pool.", night:"Last night — villa party, and Genesis (the Altos de Chavón club) if the night lands Fri–Sun, when it opens." },
-    { d:"Day 5", day:"Home.", night:"" }
-  ],
-  photos:[
-    { src:"img/casadecampo-1.jpg", thumb:"img/casadecampo-thumb.jpg", alt:"Oceanside tee shot at Teeth of the Dog, Casa de Campo", caption:"Oceanside tee shot at Teeth of the Dog, Casa de Campo", credit:"Photo: Baybay1901 / Wikimedia Commons" },
-    { src:"img/casadecampo-2.jpg", alt:"The 5,000-seat stone amphitheater at Altos de Chavón", caption:"The 5,000-seat stone amphitheater at Altos de Chavón", credit:"Photo: Mstyslav Chernov / Wikimedia Commons" },
-    { src:"img/casadecampo-3.jpg", alt:"Cobblestone lanes of the Altos de Chavón village, Casa de Campo", caption:"Cobblestone lanes of the Altos de Chavón village, Casa de Campo", credit:"Photo: Mstyslav Chernov / Wikimedia Commons" },
-    { src:"img/casadecampo-4.jpg", alt:"Saona Island beach, the boat-day destination off La Romana", caption:"Saona Island beach, the boat-day destination off La Romana", credit:"Photo: Danu Widjajanto / Wikimedia Commons" }
-  ] },
-
-{ id:"bocas", name:"Bocas del Toro", region:"Bocas del Toro, Panama", status:"CONTENDER",
-  cost:[2400,2900], scores:{C:8,F:9,W:8}, flight:"Nonstop to Panama City + island hop + water taxi",
-  wow:"Panama has had one tropical-storm landfall in recorded history, and September is Bocas\' calmest, clearest-water month — its rainfall minimum. The archipelago runs on boats, and Filthy Friday — the famous three-island bar crawl — lands exactly on our Friday.",
-  second:"Base is a Red Frog Beach Resort villa pairing (private pools, bookable chef, marina on-site) or a waterfront house on Isla Colón with a hired chef. Jet skis at the marina, ATVs across Flying Pirates\' 1,400 private acres, and snorkeling in its best-of-year window.",
-  gates:["Passports","Pack light — the island hop has an 18kg bag limit"],
-  flags:["Island infrastructure is real-world — pick a villa with a cistern and generator","Snorkeling is pretty, not world-class","A nonstop, a hop, and a water taxi to get there — the friction is the tax for the most fun in the no-storm lane"],
-  fit:"September is Bocas\' driest, flattest, clearest window — and Filthy Friday falls on Sept 25, inside our week.",
-  days:[
-    { d:"Day 1 — Mon", day:"Fly to Panama City.", night:"Casco Viejo — rooftop bars (Tántalo, La Azotea), old-town dinner. The city night doubles as connection insurance." },
-    { d:"Day 2 — Tue", day:"Morning hop to Bocas, water taxi to the villa, chef stocks the kitchen. Jet skis at the Red Frog marina, first beach session.", night:"Chef\'s welcome seafood dinner on the dock, a cooler of Balboas, cards." },
-    { d:"Day 3 — Wed", day:"Centerpiece boat day — private yacht with a chase panga to the Zapatilla Cays: reef snorkeling at best-of-year visibility, Starfish Beach stop, drinks aboard all day.", night:"Villa BBQ; bioluminescence swim if the water cooperates." },
-    { d:"Day 4 — Thu", day:"Flying Pirates ATVs — 1,400 private acres of jungle and beach trails, surf-shack lunch at Paki Point. Pool recovery after.", night:"Chef\'s big tasting dinner, early-ish — Friday is coming." },
-    { d:"Day 5 — Fri", day:"Filthy Friday — three islands, 11:30am to 9pm, the whole archipelago partying with you.", night:"It IS the night. Water taxi home, street food, crash." },
-    { d:"Day 6 — Sat", day:"Sleep in, hangover swim at Starfish Beach, midday flights home via Panama City.", night:"" }
-  ],
-  photos:[
-    { src:"img/bocas-1.jpg", thumb:"img/bocas-thumb.jpg", alt:"Beach on the Zapatilla Cays, Isla Bastimentos National Marine Park", caption:"Beach on the Zapatilla Cays, Isla Bastimentos National Marine Park", credit:"Photo: Dronepicr / Wikimedia Commons" },
-    { src:"img/bocas-2.jpg", alt:"Waterfront buildings on stilts at first light, Bocas Town, Isla Colon", caption:"Waterfront buildings on stilts at first light, Bocas Town, Isla Colon", credit:"Photo: Bernal Saborio / Wikimedia Commons" },
-    { src:"img/bocas-3.jpg", alt:"Red Frog Beach on Isla Bastimentos, with mangrove cays behind", caption:"Red Frog Beach on Isla Bastimentos, with mangrove cays behind", credit:"Photo: Dronepicr / Wikimedia Commons" }
-  ] },
-
 { id:"grenada", name:"Grenada", region:"Lance aux Epines, Grenada", status:"CONTENDER",
-  cost:[2100,2650], scores:{C:10,F:6,W:8}, flight:"JetBlue JFK nonstop daily · airport is 7 minutes from the estate",
+  cost:[2100,2650], scores:{ST:6,NL:5,AC:8,NV:9,VQ:10}, flight:"JetBlue JFK nonstop daily · ≈6.5h door-to-door — best transfer going",
+  villa:"The 7-bedroom, 4-staff estate runs $11,000/week — about $350 a head over the budget variant and worth a crew vote; the 5-bedroom on Prickly Bay is $6,000/week.",
+  mods:[
+    { k:"Boat day", v:3, n:"sculpture-park schooner" },
+    { k:"Jet skis", v:2, n:"Grand Anse" },
+    { k:"Deep-sea fishing", v:3, n:"True Blue yellowfin" },
+    { k:"ATVs", v:2, n:"island tours" },
+    { k:"Snorkeling", v:3, n:"the sculpture park" }
+  ],
+  pros:["Best villa product on the board — 7-bedroom estate, 4 staff included, private dock and beach","JetBlue daily nonstop and the villa is 7 minutes from the airport","All four modules plus the underwater-sculpture-park snorkel"],
+  cons:["Fringe-belt history is the asterisk on paradise","Nightlife is modest — the estate self-generates most nights","Expect a short shower most days"],
   wow:"The best single villa on the list, verified line by line: a 7-bedroom colonial estate — 65-ft infinity pool, two walled acres, private dock and private beach — from $11,000 a week with four staff included. A chef adds about $200 a day, and the boats collect you at your own dock.",
   second:"The boat day is a private schooner or catamaran with open bar, snorkeling the Molinere Underwater Sculpture Park. Jet skis on Grand Anse, ATVs to the Seven Sisters waterfalls, and True Blue\'s yellowfin boats — the only southern-Caribbean option with all four modules. A 5-bedroom on Prickly Bay drops the price to about $2,100 a head.",
   gates:["Passports"],
@@ -327,7 +342,17 @@ const TRIPS = [
   ] },
 
 { id:"barbados", name:"Barbados", region:"Platinum (west) coast, Barbados", status:"CONTENDER",
-  cost:[1900,2700], scores:{C:9,F:8,W:8}, flight:"JFK 4h45 nonstop (14x/week) · the only CLT nonstop on the list",
+  cost:[1900,2700], scores:{ST:6,NL:8,AC:8,NV:7,VQ:9}, flight:"JFK 4h45 nonstop + the only CLT nonstop · ≈7–8h door-to-door",
+  villa:"$750–1,200 a night for a staffed west-coast villa with the cook included — best value-for-quality on the board.",
+  mods:[
+    { k:"Boat day", v:3, n:"turtle + wreck catamaran" },
+    { k:"Jet skis", v:3, n:"The Boatyard — everywhere" },
+    { k:"Deep-sea fishing", v:3, n:"serious billfish fleet" },
+    { k:"ATVs", v:1, n:"jeep safaris instead" },
+    { k:"Snorkeling", v:3, n:"turtles + shipwrecks" }
+  ],
+  pros:["Staffed villas are the default — cook and housekeeper included at these rates","Best nightlife of the new finds — the Gap, Harbour Lights, Oistins","The only Charlotte nonstop, and September is the fare trough"],
+  cons:["No ATVs — jeep safaris substitute","Most storm-exposed of the low-latitude lane","Wettest month on paper — the brief-shower reality needs selling to the crew"],
   wow:"The one island where staffed villas are the cultural default — cook, housekeeper and laundress come standard — with the best nightlife of the new additions and the easiest flights, September being the fare trough.",
   second:"The boat day swims with green turtles and snorkels two shipwrecks from a private catamaran — verified at roughly $1,000–2,300 for the whole group, not per head. Jet skis at Carlisle Bay, a serious billfish fleet, Mount Gay (the world\'s oldest rum distillery), and Oistins Fish Fry for the Friday closer.",
   gates:["Passports"],
@@ -347,29 +372,18 @@ const TRIPS = [
     { src:"img/barbados-3.jpg", alt:"Mount Gay rum lineup at the distillery visitors centre", caption:"Mount Gay rum lineup at the distillery visitors centre", credit:"Photo: Aneil Lutchman / Wikimedia Commons" }
   ] },
 
-{ id:"costarica", name:"Costa Rica Caribbean", region:"Punta Uva, Costa Rica", status:"CONTENDER",
-  cost:[1800,2300], scores:{C:8,F:6,W:7}, flight:"Nonstop to San José + Sansa hop to Limón + 1-hr drive",
-  wow:"The insider play: the Pacific side is a September washout, but Costa Rica\'s Caribbean coast runs opposite — September is its driest, flattest, clearest month. Base is El Refugio, a 5-bedroom jungle-luxe villa sleeping 10 at about $730 a night, on what\'s routinely rated the country\'s best beach. Sloths in the villa trees are standard.",
-  second:"The centerpiece boat day crosses the border into Bocas del Toro — private dawn shuttle, a fixer for the formalities, charter waiting on the Panama side for the Zapatilla Cays. ATVs to waterfalls and a cacao farm, Cahuita reef at peak visibility, 200-lb tarpon for the fishermen. Private chefs are an established local service.",
-  gates:["Passports — and bring them on the boat day; it crosses into Panama"],
-  flags:["The boat day is an expedition — 2.5–3 hours door-to-deck each way; the fallback is a Cahuita reef panga 10 minutes away","No jet skis — protected waters","Nightlife is reggae-town bars — fun, not clubby"],
-  fit:"September is the Caribbean side\'s driest month — the locals\' veranillo: flat seas, peak reef visibility. Cheapest option on the list.",
-  days:[
-    { d:"Day 1 — Mon", day:"Nonstop to San José, the Sansa hop to Limón, one hour into the jungle. Howler monkeys overhead at the villa, chef\'s first dinner.", night:"Fire pit, rum, jungle sounds." },
-    { d:"Day 2 — Tue", day:"Punta Uva beach day — the country\'s best beach is the front yard: swim, beach-bar session, sloth-spotting from the hammocks.", night:"Salsa Brava reggae happy hour, then live music at Lazy Mon." },
-    { d:"Day 3 — Wed", day:"The expedition boat day — dawn shuttle to the border, a fixer walks the formalities, charter waiting on the Panama side: Zapatilla Cays snorkel, Starfish Beach, drinks aboard. Back by dark.", night:"The chef holds a late Caribbean feast." },
-    { d:"Day 4 — Thu", day:"ATVs through the jungle to waterfalls and a cacao farm; afternoon split — Cahuita reef snorkel or tarpon fishing.", night:"Chef\'s rondón (seafood coconut stew), a local rum tasting, bonfire on the sand." },
-    { d:"Day 5 — Fri", day:"Surf lesson or pure recovery; the Manzanillo point hike for the postcard view.", night:"Final Puerto Viejo crawl — the whole strip is a ten-minute stumble." },
-    { d:"Day 6 — Sat", day:"Sansa hop and nonstop home.", night:"" }
-  ],
-  photos:[
-    { src:"img/costarica-1.jpg", thumb:"img/costarica-thumb.jpg", alt:"Punta Uva beach near Puerto Viejo, Caribbean coast", caption:"Punta Uva beach near Puerto Viejo, Caribbean coast", credit:"Photo: Jaimedelamata / Wikimedia Commons" },
-    { src:"img/costarica-2.jpg", alt:"Three-toed sloth in Cahuita National Park", caption:"Three-toed sloth in Cahuita National Park", credit:"Photo: Christian Mehlführer / Wikimedia Commons" },
-    { src:"img/costarica-3.jpg", alt:"Coastline of Cahuita National Park", caption:"Coastline of Cahuita National Park", credit:"Photo: Pavel Kirillov / Wikimedia Commons" }
-  ] },
-
 { id:"lakepowell", name:"Lake Powell Houseboat", region:"Antelope Point, Lake Powell, AZ", status:"CONTENDER",
-  cost:[2600,2850], scores:{C:8,F:6,W:9}, flight:"Fly to Vegas + new Contour nonstop to Page (Mon/Thu/Fri/Sun) or a 4.5-hr drive",
+  cost:[2600,2850], scores:{ST:10,NL:1,AC:7,NV:10,VQ:5}, flight:"Fly to Vegas + Contour hop to Page (Mon/Thu/Fri/Sun) · ≈9–12h door-to-door",
+  villa:"The 75-ft houseboat is ~$13,100 for 5 days (an Aug–Oct 20%-off window is advertised) — six queen staterooms, 2.5 baths, and it\'s a boat. Costs more than a villa, but it replaces villa + boat + toys.",
+  mods:[
+    { k:"Boat day", v:3, n:"the boat IS the trip — every day" },
+    { k:"Jet skis", v:3, n:"plus wakesurf" },
+    { k:"Deep-sea fishing", v:1, n:"lake stripers" },
+    { k:"ATVs", v:0, n:"none" },
+    { k:"Snorkeling", v:0, n:"swim + cliff jumps instead" }
+  ],
+  pros:["Hurricane-proof by definition — it doubles as the storm pivot for every tropical pick","The boat day happens all five days","A private canyon cove is its own venue, with the best night sky on the board"],
+  cons:["No snorkeling, no beach bars — the fun is 100% self-generated","The houseboat costs more than a villa — but it replaces villa, boat and toys","Strict sober-operator rules on the water"],
   wow:"The houseboat IS the villa and the boat at once: a 75-foot X\'treme with six queen staterooms, beached each night in a private canyon cove with your own bar, sound system, and a wakeboat and jet skis tied alongside. Late-September water is still 73–78°, the summer crowds are gone, and the night sky is the best on the list.",
   second:"Wakesurfing glass-calm mornings, jet-ski canyon runs, cliff jumps, striper fishing at dawn, and one shore morning for the Antelope Canyon slot tour and Horseshoe Bend, ten minutes from the marina. A chef-on-board program and a licensed pilot are both hireable. It also doubles as the weather-proof backup for every tropical pick.",
   gates:["No passports needed — the one domestic option"],
@@ -390,6 +404,10 @@ const TRIPS = [
 
 { id:"curacao", name:"Curaçao", region:"Jan Thiel / Willemstad, Curaçao", status:"MONITOR",
   cost:[2000,2600], scores:{C:8,F:7,W:8}, flight:"Thin nonstops — JFK 3x/week, Miami 2x/day",
+  mods:[
+    { k:"Boat day", v:3, n:"Klein Curaçao" },
+    { k:"Snorkeling", v:3, n:"best of the ABCs" }
+  ],
   wow:"Aruba\'s cheaper twin in the same no-storm lane: the Klein Curaçao boat day (a deserted island with a lighthouse and the ABCs\' best beach), the best reef snorkeling of the three islands, and the Jan Thiel bar scene.",
   second:"On the list as insurance — it promotes if Aruba\'s September villa inventory falls through.",
   gates:["Passports"],
@@ -407,6 +425,13 @@ const TRIPS = [
 
 { id:"roatan", name:"Roatán", region:"West Bay, Roatán, Honduras", status:"MONITOR",
   cost:[1900,2400], scores:{C:8,F:7,W:9}, flight:"AA Miami daily makes the Monday arrival easy",
+  mods:[
+    { k:"Boat day", v:3, n:"$1,250 private 50-ft cat" },
+    { k:"Jet skis", v:2, n:"" },
+    { k:"Deep-sea fishing", v:2, n:"" },
+    { k:"ATVs", v:2, n:"" },
+    { k:"Snorkeling", v:3, n:"world-class reef, 50m off West Bay" }
+  ],
   wow:"The bargain of the storm-belt lane: a verified $1,250 flat rate buys a private 50-ft catamaran for all ten, and a world-class reef sits 50 meters off West Bay. Every module is available.",
   second:"Watching rather than building: it stays on the list only if the whole crew explicitly accepts the two honest problems below.",
   gates:["Passports","Everyone explicitly OK with the State Department Level 3 advisory — the Bay Islands get only a \'better policed\' note"],
@@ -420,6 +445,69 @@ const TRIPS = [
   photos:[
     { src:"img/roatan-1.jpg", thumb:"img/roatan-thumb.jpg", alt:"West Bay Beach, Roatán — white sand and calm turquoise water with the reef just offshore", caption:"West Bay Beach, Roatán — white sand and calm turquoise water with the reef just offshore", credit:"Photo: Adalberto Hernandez Vega / Wikimedia Commons" },
     { src:"img/roatan-2.jpg", alt:"Caribbean reef shark cruising the coral reef off Roatán, Bay Islands", caption:"Caribbean reef shark cruising the coral reef off Roatán, Bay Islands", credit:"Photo: William Eburn / Wikimedia Commons" }
+  ] },
+
+{ id:"casadecampo", name:"Casa de Campo", region:"La Romana, Dominican Republic", status:"CUT", archived:true,
+  cost:[2400,3000], scores:{C:10,F:6,W:8}, flight:"East Coast flights usually connect once",
+  wow:"A 7,000-acre resort built for groups like this: staffed villas with butler service standard (private chefs on the bigger villas or added on), top-100 ocean golf at Teeth of the Dog, a 245-acre sporting-clays center, marina charters, and a clifftop village with a late-night club — all inside one gate.",
+  second:"A boat day to Saona or Catalina Island from the resort's own marina, plus deep-sea boats, buggies, and the clays center — most of the module menu inside the gate.",
+  gates:["Passports"],
+  flags:["Cut 7/10 in the narrowing round: Cabo covers belt-lane luxury with a deeper menu and real nightlife, and flights here connect","Full Caribbean hurricane exposure — same refundable-everything rule as Cabo","Flights usually connect once","Nightlife is resort-bound — the villa and Altos de Chavón carry it"],
+  fit:"Low-season value, and Teeth of the Dog just reopened from a year-long restoration. The weather rules above apply.",
+  days:[
+    { d:"Day 1", day:"Land, villa check-in, golf carts assigned.", night:"Chef dinner at the villa." },
+    { d:"Day 2", day:"Teeth of the Dog for the golfers, sporting clays for the rest.", night:"Dinner up in Altos de Chavón, drinks on the cliff edge." },
+    { d:"Day 3", day:"Boat day — Saona or Catalina Island.", night:"Marina dinner." },
+    { d:"Day 4", day:"Swap day — golf, clays, or pool.", night:"Last night — villa party, and Genesis (the Altos de Chavón club) if the night lands Fri–Sun, when it opens." },
+    { d:"Day 5", day:"Home.", night:"" }
+  ],
+  photos:[
+    { src:"img/casadecampo-1.jpg", thumb:"img/casadecampo-thumb.jpg", alt:"Oceanside tee shot at Teeth of the Dog, Casa de Campo", caption:"Oceanside tee shot at Teeth of the Dog, Casa de Campo", credit:"Photo: Baybay1901 / Wikimedia Commons" },
+    { src:"img/casadecampo-2.jpg", alt:"The 5,000-seat stone amphitheater at Altos de Chavón", caption:"The 5,000-seat stone amphitheater at Altos de Chavón", credit:"Photo: Mstyslav Chernov / Wikimedia Commons" },
+    { src:"img/casadecampo-3.jpg", alt:"Cobblestone lanes of the Altos de Chavón village, Casa de Campo", caption:"Cobblestone lanes of the Altos de Chavón village, Casa de Campo", credit:"Photo: Mstyslav Chernov / Wikimedia Commons" },
+    { src:"img/casadecampo-4.jpg", alt:"Saona Island beach, the boat-day destination off La Romana", caption:"Saona Island beach, the boat-day destination off La Romana", credit:"Photo: Danu Widjajanto / Wikimedia Commons" }
+  ] },
+
+{ id:"bocas", name:"Bocas del Toro", region:"Bocas del Toro, Panama", status:"CUT", archived:true,
+  cost:[2400,2900], scores:{C:8,F:9,W:8}, flight:"Nonstop to Panama City + island hop + water taxi",
+  wow:"Panama has had one tropical-storm landfall in recorded history, and September is Bocas\' calmest, clearest-water month — its rainfall minimum. The archipelago runs on boats, and Filthy Friday — the famous three-island bar crawl — lands exactly on our Friday.",
+  second:"Base is a Red Frog Beach Resort villa pairing (private pools, bookable chef, marina on-site) or a waterfront house on Isla Colón with a hired chef. Jet skis at the marina, ATVs across Flying Pirates\' 1,400 private acres, and snorkeling in its best-of-year window.",
+  gates:["Passports","Pack light — the island hop has an 18kg bag limit"],
+  flags:["Cut 7/10 on the friction ceiling — 12–16 hours door-to-door. The hardest cut on merit; reopens instantly for any future trip with a softer travel rule","Island infrastructure is real-world — pick a villa with a cistern and generator","Snorkeling is pretty, not world-class","A nonstop, a hop, and a water taxi to get there — the friction is the tax for the most fun in the no-storm lane"],
+  fit:"September is Bocas\' driest, flattest, clearest window — and Filthy Friday falls on Sept 25, inside our week.",
+  days:[
+    { d:"Day 1 — Mon", day:"Fly to Panama City.", night:"Casco Viejo — rooftop bars (Tántalo, La Azotea), old-town dinner. The city night doubles as connection insurance." },
+    { d:"Day 2 — Tue", day:"Morning hop to Bocas, water taxi to the villa, chef stocks the kitchen. Jet skis at the Red Frog marina, first beach session.", night:"Chef\'s welcome seafood dinner on the dock, a cooler of Balboas, cards." },
+    { d:"Day 3 — Wed", day:"Centerpiece boat day — private yacht with a chase panga to the Zapatilla Cays: reef snorkeling at best-of-year visibility, Starfish Beach stop, drinks aboard all day.", night:"Villa BBQ; bioluminescence swim if the water cooperates." },
+    { d:"Day 4 — Thu", day:"Flying Pirates ATVs — 1,400 private acres of jungle and beach trails, surf-shack lunch at Paki Point. Pool recovery after.", night:"Chef\'s big tasting dinner, early-ish — Friday is coming." },
+    { d:"Day 5 — Fri", day:"Filthy Friday — three islands, 11:30am to 9pm, the whole archipelago partying with you.", night:"It IS the night. Water taxi home, street food, crash." },
+    { d:"Day 6 — Sat", day:"Sleep in, hangover swim at Starfish Beach, midday flights home via Panama City.", night:"" }
+  ],
+  photos:[
+    { src:"img/bocas-1.jpg", thumb:"img/bocas-thumb.jpg", alt:"Beach on the Zapatilla Cays, Isla Bastimentos National Marine Park", caption:"Beach on the Zapatilla Cays, Isla Bastimentos National Marine Park", credit:"Photo: Dronepicr / Wikimedia Commons" },
+    { src:"img/bocas-2.jpg", alt:"Waterfront buildings on stilts at first light, Bocas Town, Isla Colon", caption:"Waterfront buildings on stilts at first light, Bocas Town, Isla Colon", credit:"Photo: Bernal Saborio / Wikimedia Commons" },
+    { src:"img/bocas-3.jpg", alt:"Red Frog Beach on Isla Bastimentos, with mangrove cays behind", caption:"Red Frog Beach on Isla Bastimentos, with mangrove cays behind", credit:"Photo: Dronepicr / Wikimedia Commons" }
+  ] },
+
+{ id:"costarica", name:"Costa Rica Caribbean", region:"Punta Uva, Costa Rica", status:"CUT", archived:true,
+  cost:[1800,2300], scores:{C:8,F:6,W:7}, flight:"Nonstop to San José + Sansa hop to Limón + 1-hr drive",
+  wow:"The insider play: the Pacific side is a September washout, but Costa Rica\'s Caribbean coast runs opposite — September is its driest, flattest, clearest month. Base is El Refugio, a 5-bedroom jungle-luxe villa sleeping 10 at about $730 a night, on what\'s routinely rated the country\'s best beach. Sloths in the villa trees are standard.",
+  second:"The centerpiece boat day crosses the border into Bocas del Toro — private dawn shuttle, a fixer for the formalities, charter waiting on the Panama side for the Zapatilla Cays. ATVs to waterfalls and a cacao farm, Cahuita reef at peak visibility, 200-lb tarpon for the fishermen. Private chefs are an established local service.",
+  gates:["Passports — and bring them on the boat day; it crosses into Panama"],
+  flags:["Cut 7/10: rides the friction ceiling at 10–12 hours, and its centerpiece boat day routed through now-cut Bocas","The boat day is an expedition — 2.5–3 hours door-to-deck each way; the fallback is a Cahuita reef panga 10 minutes away","No jet skis — protected waters","Nightlife is reggae-town bars — fun, not clubby"],
+  fit:"September is the Caribbean side\'s driest month — the locals\' veranillo: flat seas, peak reef visibility. Cheapest option on the list.",
+  days:[
+    { d:"Day 1 — Mon", day:"Nonstop to San José, the Sansa hop to Limón, one hour into the jungle. Howler monkeys overhead at the villa, chef\'s first dinner.", night:"Fire pit, rum, jungle sounds." },
+    { d:"Day 2 — Tue", day:"Punta Uva beach day — the country\'s best beach is the front yard: swim, beach-bar session, sloth-spotting from the hammocks.", night:"Salsa Brava reggae happy hour, then live music at Lazy Mon." },
+    { d:"Day 3 — Wed", day:"The expedition boat day — dawn shuttle to the border, a fixer walks the formalities, charter waiting on the Panama side: Zapatilla Cays snorkel, Starfish Beach, drinks aboard. Back by dark.", night:"The chef holds a late Caribbean feast." },
+    { d:"Day 4 — Thu", day:"ATVs through the jungle to waterfalls and a cacao farm; afternoon split — Cahuita reef snorkel or tarpon fishing.", night:"Chef\'s rondón (seafood coconut stew), a local rum tasting, bonfire on the sand." },
+    { d:"Day 5 — Fri", day:"Surf lesson or pure recovery; the Manzanillo point hike for the postcard view.", night:"Final Puerto Viejo crawl — the whole strip is a ten-minute stumble." },
+    { d:"Day 6 — Sat", day:"Sansa hop and nonstop home.", night:"" }
+  ],
+  photos:[
+    { src:"img/costarica-1.jpg", thumb:"img/costarica-thumb.jpg", alt:"Punta Uva beach near Puerto Viejo, Caribbean coast", caption:"Punta Uva beach near Puerto Viejo, Caribbean coast", credit:"Photo: Jaimedelamata / Wikimedia Commons" },
+    { src:"img/costarica-2.jpg", alt:"Three-toed sloth in Cahuita National Park", caption:"Three-toed sloth in Cahuita National Park", credit:"Photo: Christian Mehlführer / Wikimedia Commons" },
+    { src:"img/costarica-3.jpg", alt:"Coastline of Cahuita National Park", caption:"Coastline of Cahuita National Park", credit:"Photo: Pavel Kirillov / Wikimedia Commons" }
   ] },
 
 { id:"argentina", name:"Learn Polo in Argentina", region:"Buenos Aires Province, Argentina", status:"ARCHIVED", archived:true,
@@ -610,8 +698,9 @@ const TRIPS = [
 <script>
 (function(){
   const $ = s => document.querySelector(s);
-  const statusColor = { CONTENDER:"var(--river)", MONITOR:"var(--pine)", ARCHIVED:"var(--ink-soft)" };
-  const SCORE_LABEL = { C:"Comfort", F:"Fun", W:"Water", A:"Adventure", S:"Skill" };
+  const statusColor = { CONTENDER:"var(--river)", MONITOR:"var(--pine)", CUT:"var(--ink-soft)", ARCHIVED:"var(--ink-soft)" };
+  const SCORE_LABEL = { ST:"Storm-risk", NL:"Nightlife", AC:"Activities", NV:"Novelty", VQ:"Villa quality",
+                        C:"Comfort", F:"Fun", W:"Water", A:"Adventure", S:"Skill" };
   const money = n => "$" + n.toLocaleString();
   const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
   document.getElementById("updated").textContent = CONFIG.UPDATED;
@@ -646,7 +735,7 @@ const TRIPS = [
     $("#tally").innerHTML =
       '<span class="tag contender"><b>'+(c.CONTENDER||0)+'</b> CONTENDERS</span>' +
       '<span class="tag monitor"><b>'+(c.MONITOR||0)+'</b> MONITORING</span>' +
-      '<button class="chip" id="archBtn" aria-pressed="'+showArchive+'">Archive ('+(c.ARCHIVED||0)+')</button>' +
+      '<button class="chip" id="archBtn" aria-pressed="'+showArchive+'">Archive ('+TRIPS.filter(t => t.archived).length+')</button>' +
       '<button class="chip" id="cmpBtn" aria-pressed="false">Compare table</button>';
     $("#archBtn").addEventListener("click", () => {
       showArchive = !showArchive;
@@ -706,13 +795,34 @@ const TRIPS = [
       }
     }
 
+    if (t.mods){
+      html += '<div class="v-sec"><h3>Activity menu</h3><div class="mods">' +
+        t.mods.map(m => {
+          const cls = m.v === 0 ? " m0" : (m.v === 1 ? " m1" : "");
+          const lvl = m.v === 0 ? "—" : ("●".repeat(m.v) + "○".repeat(3 - m.v));
+          return '<span class="mod'+cls+'">'+esc(m.k)+'<span class="lvl">'+lvl+'</span>'+(m.n ? ' <i>· '+esc(m.n)+'</i>' : '')+'</span>';
+        }).join("") + '</div>' +
+        '<p class="scorenote">●●● = strong here &nbsp;·&nbsp; ●○○ = thin / with caveats &nbsp;·&nbsp; — = not really a thing here</p></div>';
+    }
+
+    const isNewRubric = "ST" in t.scores;
     const gauges =
       '<div class="v-sec" style="--status:'+col+'"><h3>How it scores</h3>' +
-        Object.keys(t.scores).map(k => gaugeRow(SCORE_LABEL[k] || k, t.scores[k], col)).join("") + '</div>';
+        Object.keys(t.scores).map(k => gaugeRow(SCORE_LABEL[k] || k, t.scores[k], col)).join("") +
+        (isNewRubric ? '<p class="scorenote">Higher is better on every bar — storm-risk is scored as safety (10 = zero storm exposure).</p>' : '') +
+      '</div>';
+
+    const prosCons = (t.pros && t.cons)
+      ? '<div class="v-sec"><h3>For / against</h3><div class="pc">' +
+          '<ul>'+t.pros.map(p => '<li class="p">'+esc(p)+'</li>').join("")+'</ul>' +
+          '<ul>'+t.cons.map(c => '<li class="c">'+esc(c)+'</li>').join("")+'</ul>' +
+        '</div></div>'
+      : '';
 
     html += '<div class="v-cols" style="--status:'+col+'">' +
       '<div>' +
         '<div class="v-sec"><h3>Why it\'s on the list</h3><p>'+esc(t.wow)+'</p></div>' +
+        prosCons +
         '<div class="v-sec"><h3>Also in the plan</h3><p>'+esc(t.second)+'</p></div>' +
         '<div class="v-sec"><h3>Day by day (tentative)</h3>' +
           t.days.map(x =>
@@ -724,6 +834,7 @@ const TRIPS = [
       '</div>' +
       '<div>' +
         gauges +
+        (t.villa ? '<div class="v-sec"><h3>The villa</h3><p>'+esc(t.villa)+'</p></div>' : '') +
         '<div class="v-sec"><h3>Requirements</h3><ul>'+t.gates.map(g=>'<li>'+esc(g)+'</li>').join("")+'</ul></div>' +
         '<div class="v-sec"><h3>Good to know</h3><ul>'+t.flags.map(f=>'<li>'+esc(f)+'</li>').join("")+'</ul></div>' +
         '<div class="v-sec"><h3>Timing</h3><p>'+esc(t.fit)+'</p></div>' +
@@ -821,12 +932,16 @@ const TRIPS = [
     const el = $("#compare");
     el.classList.toggle("show", compareOn);
     if (!compareOn) return;
-    el.innerHTML = '<table><thead><tr><th>Option</th><th>Status</th><th>Cost / person</th><th>Scores</th><th>Requirements</th></tr></thead><tbody>' +
-      vis().map(t => '<tr><td><b>'+esc(t.name)+'</b><br><span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">'+esc(t.region)+'</span></td>' +
+    el.innerHTML = '<table><thead><tr><th>Option</th><th>Status</th><th>Cost / person</th><th>Scores</th><th>Total</th><th>Requirements</th></tr></thead><tbody>' +
+      vis().map(t => {
+        const total = "ST" in t.scores ? Object.values(t.scores).reduce((a,b)=>a+b,0) : null;
+        return '<tr><td><b>'+esc(t.name)+'</b><br><span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">'+esc(t.region)+'</span></td>' +
         '<td class="mono" style="color:'+statusColor[t.status]+'">'+t.status+'</td>' +
         '<td class="mono">'+money(t.cost[0])+'–'+money(t.cost[1])+'</td>' +
         '<td class="mono">'+Object.keys(t.scores).map(k => k+' '+t.scores[k]).join(" · ")+'</td>' +
-        '<td>'+t.gates.map(esc).join(" · ")+'</td></tr>').join("") + '</tbody></table>';
+        '<td class="mono">'+(total !== null ? '<b>'+total+'</b>' : '—')+'</td>' +
+        '<td>'+t.gates.map(esc).join(" · ")+'</td></tr>';
+      }).join("") + '</tbody></table>';
   }
 
   /* ---- boot ---- */
