@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Trip HQ — Sept 21–27, 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Public+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS — topo field-map system ============ */
+:root{
+  --bone:#EAE8DD;        /* page */
+  --bone-2:#E2DFD2;      /* raised card */
+  --contour:#C7C1AA;     /* hairlines, topo lines */
+  --ink:#23281E;         /* deep olive-ink text */
+  --ink-soft:#5A5F50;
+  --river:#31639C;       /* contender / links */
+  --blaze:#E8641B;       /* anchor / active markers ONLY */
+  --pine:#3E5C43;        /* backup / secondary */
+  --display:"Big Shoulders Display", "Arial Narrow", sans-serif;
+  --body:"Public Sans", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
+body{background:var(--bone);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--river);outline-offset:2px}
+
+/* ============ TOP BAR ============ */
+.bar{position:sticky;top:0;z-index:50;display:flex;justify-content:space-between;align-items:center;
+  padding:10px 20px;background:var(--bone);border-bottom:2px solid var(--ink)}
+.bar .mark{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.04em;text-transform:uppercase}
+.bar .mark span{color:var(--blaze)}
+.bar .meta{font-family:var(--mono);font-size:12px;color:var(--ink-soft);text-align:right}
+
+/* ============ HERO ============ */
+.hero{position:relative;overflow:hidden;border-bottom:2px solid var(--ink);padding:56px 20px 40px}
+.hero svg.contours{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.hero-inner{position:relative;max-width:1060px;margin:0 auto}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-family:var(--display);font-weight:800;text-transform:uppercase;line-height:.92;
+  font-size:clamp(44px,9vw,104px);margin:10px 0 14px}
+h1 .r{color:var(--blaze)}
+.hero p.sub{max-width:560px;color:var(--ink-soft)}
+
+/* ============ TRIP MODE ============ */
+.tripmode{display:none;max-width:1060px;margin:0 auto;padding:20px}
+.countdown{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0 30px}
+.cd{border:2px solid var(--ink);background:var(--bone-2);padding:14px 18px;min-width:110px;text-align:center}
+.cd b{display:block;font-family:var(--display);font-weight:800;font-size:56px;line-height:1}
+.cd span{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.day{border:1.5px solid var(--ink);background:var(--bone-2);margin:12px 0;padding:14px 18px}
+.day .d{font-family:var(--mono);font-size:12px;color:var(--blaze);letter-spacing:.1em;text-transform:uppercase}
+.day p{margin-top:4px}
+.updates li{border-left:4px solid var(--river);background:var(--bone-2);padding:10px 14px;margin:10px 0;list-style:none;font-size:14.5px}
+.updates time{font-family:var(--mono);font-size:12px;color:var(--ink-soft);display:block}
+
+/* ============ FOOTER ============ */
+footer{border-top:2px solid var(--ink);padding:26px 20px 60px;max-width:1060px;margin:0 auto;font-family:var(--mono);font-size:12px;color:var(--ink-soft)}
+footer b{color:var(--ink)}
+@media(max-width:520px){ .bar .meta{font-size:10px} .cd b{font-size:40px} }
+</style>
+</head>
+<body>
+
+<!-- ================= CONFIG ================= -->
+<script>
+const CONFIG = {
+  // Decision day: paste the winning trip object here (see CLAUDE.md for the runbook).
+  // Until then it stays null and the page shows the countdown + updates feed.
+  CHOSEN_TRIP: null,
+  TRIP_START: "2026-09-21T09:00:00-04:00",
+  UPDATED: "July 10, 2026"
+};
+</script>
+
+<header class="bar">
+  <div class="mark">Trip<span>▲</span>HQ</div>
+  <div class="meta">SEPT 21–27, 2026 · 10 RIDERS · $3K CAP<br>UPDATED <span id="updated"></span></div>
+</header>
+
+<section class="hero">
+  <svg class="contours" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-20,340 C180,300 260,380 460,330 S820,240 1220,300" fill="none" stroke="#C7C1AA" stroke-width="1.5"/>
+    <path d="M-20,290 C200,250 300,330 520,280 S860,190 1220,250" fill="none" stroke="#C7C1AA" stroke-width="1.5"/>
+    <path d="M-20,240 C220,200 340,280 580,230 S900,140 1220,200" fill="none" stroke="#C7C1AA" stroke-width="1.5"/>
+    <path d="M-20,190 C240,150 380,230 640,180 S940,95 1220,150" fill="none" stroke="#C7C1AA" stroke-width="1.5"/>
+    <path d="M-20,140 C260,100 420,180 700,130 S980,55 1220,100" fill="none" stroke="#C7C1AA" stroke-width="1.5"/>
+    <path d="M-20,265 C230,225 330,305 555,255 S880,165 1220,225" fill="none" stroke="#E8641B" stroke-width="2" stroke-dasharray="7 7"/>
+  </svg>
+  <div class="hero-inner" id="tripHero"></div>
+</section>
+
+<main id="trip" class="tripmode">
+  <div id="tripBody"></div>
+</main>
+
+<footer>
+  <b>House rules:</b> Legit Audit enforced · wheels by day, whiskey by night · refundable bookings + trip insurance for all ·
+  decision by the groom and best man. This page is unlisted — don't forward the link.
+</footer>
+
+<!-- ================= DATA ================= -->
+<script>
+const UPDATES = [
+  { d:"Jul 10, 2026", t:"Trip HQ goes live. The destination drops here the moment the call is made." },
+  { d:"Jul 8, 2026", t:"Intake form goes out to the crew. Deadline: July 15." }
+];
+</script>
+
+<!-- ================= APP ================= -->
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  document.getElementById("updated").textContent = CONFIG.UPDATED;
+
+  const t = CONFIG.CHOSEN_TRIP;
+  if (!t){
+    $("#tripHero").innerHTML =
+      '<div class="eyebrow">Bachelor expedition · trip HQ</div>' +
+      '<h1>Awaiting<br>the <span class="r">call.</span></h1>' +
+      '<p class="sub">Destination classified until the groom and best man make the call. ' +
+      'Lock the week, get your intake form in, and watch this page — flights, itinerary, and marching orders land here.</p>' +
+      '<div class="countdown" id="cd"></div>';
+  } else {
+    $("#tripHero").innerHTML =
+      '<div class="eyebrow">It\'s official</div>' +
+      '<h1>'+t.name.replace(/ /g,"<br>")+'</h1>' +
+      '<p class="sub">'+t.region+' · Sept 21–27, 2026 · '+t.flight+'</p>' +
+      '<div class="countdown" id="cd"></div>';
+  }
+
+  $("#trip").style.display = "block";
+  $("#tripBody").innerHTML =
+    (t ? '<h3 class="eyebrow" style="margin:26px 0 6px">The shape of it</h3>' +
+      t.build.map(b => { const i = b.indexOf(":"); return '<div class="day"><div class="d">'+ (i>0?b.slice(0,i):"") +'</div><p>'+ (i>0?b.slice(i+1).trim():b) +'</p></div>'; }).join("")
+    : '') +
+    '<h3 class="eyebrow" style="margin:26px 0 6px">Updates</h3><ul class="updates">' +
+    UPDATES.map(u => '<li><time>'+u.d+'</time>'+u.t+'</li>').join("") + '</ul>';
+
+  const target = new Date(CONFIG.TRIP_START).getTime();
+  function tick(){
+    const ms = Math.max(0, target - Date.now());
+    const d = Math.floor(ms/864e5), h = Math.floor(ms%864e5/36e5), mi = Math.floor(ms%36e5/6e4);
+    $("#cd").innerHTML = '<div class="cd"><b>'+d+'</b><span>days</span></div><div class="cd"><b>'+h+'</b><span>hours</span></div><div class="cd"><b>'+mi+'</b><span>min</span></div>';
+  }
+  tick(); setInterval(tick, 30000);
+})();
+</script>
+</body>
+</html>
