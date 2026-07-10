@@ -93,6 +93,12 @@ h1 .r{color:var(--blaze)}
 .scorenote{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);margin:6px 0 0}
 
 /* activity tags */
+/* quick-facts chips: temps + door-to-door */
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+.stat{border:1.5px solid var(--ink);background:var(--bone-2);padding:6px 12px 7px;flex:0 0 auto}
+.stat .k{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.stat b{font-family:var(--mono);font-size:13.5px;font-weight:600;white-space:nowrap}
+
 .mods{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 0}
 .mod{font-family:var(--mono);font-size:11.5px;padding:5px 10px;border:1.5px solid var(--ink);background:var(--bone-2)}
 .mod .lvl{letter-spacing:2px;margin-left:6px}
@@ -220,6 +226,7 @@ const CONFIG = {
 const TRIPS = [
 { id:"aruba", name:"Aruba", region:"Malmok / Palm Beach, Aruba", status:"CONTENDER",
   cost:[2300,2900], scores:{ST:9,NL:6,AC:8,NV:5,VQ:8}, flight:"Nonstops from JFK, BOS and CLT · ≈6–7h door-to-door",
+  temps:[89,79], travel:{nyc:"≈6–7h nonstop", atl:"≈6–7h nonstop", clt:"≈6–7h nonstop"},
   villa:"Modern 5–6 bedroom private-pool villa in Malmok or Palm Beach at $800–1,400 a night, chef hired in.",
   mods:[
     { k:"Boat day", v:3, n:"private 65-ft cat — Antilla wreck" },
@@ -251,6 +258,7 @@ const TRIPS = [
 
 { id:"cartagena", name:"Cartagena, Colombia", region:"Cartagena, Colombia", status:"CONTENDER",
   cost:[1800,2400], scores:{ST:9,NL:9,AC:6,NV:6,VQ:8}, flight:"Nonstop ~5h from NYC/MIA · ≈7h door-to-door",
+  temps:[88,77], travel:{nyc:"≈7h nonstop", atl:"≈8–9h · 1 stop", clt:"≈8–9h · 1 stop"},
   villa:"Staffed colonial casa with a rooftop plunge pool inside the walls, $700–1,400 a night — showpiece tier.",
   mods:[
     { k:"Boat day", v:3, n:"Rosarios yacht — Cholón sandbar" },
@@ -282,6 +290,7 @@ const TRIPS = [
 
 { id:"cabo", name:"Cabo Villa Week", region:"Cabo San Lucas, Mexico", status:"CONTENDER",
   cost:[2600,3400], scores:{ST:3,NL:8,AC:10,NV:3,VQ:8}, flight:"JFK nonstop ~6.5h · ≈8–9h door-to-door",
+  temps:[90,75], travel:{nyc:"≈8–9h nonstop", atl:"≈7–8h nonstop", clt:"≈9–10h · 1 stop"},
   villa:"$1,200–2,200 a night buys a very good 5–6 bedroom corridor villa; the famous Pedregal flagships run higher.",
   mods:[
     { k:"Boat day", v:3, n:"yacht to the Arch" },
@@ -312,6 +321,7 @@ const TRIPS = [
 
 { id:"grenada", name:"Grenada", region:"Lance aux Epines, Grenada", status:"CONTENDER",
   cost:[2100,2650], scores:{ST:6,NL:5,AC:8,NV:9,VQ:10}, flight:"JetBlue JFK nonstop daily · ≈6.5h door-to-door — best transfer going",
+  temps:[86,75], travel:{nyc:"≈6.5h nonstop", atl:"≈9–10h · 1 stop", clt:"≈9–10h · 1 stop"},
   villa:"The 7-bedroom, 4-staff estate runs $11,000/week — about $350 a head over the budget variant and worth a crew vote; the 5-bedroom on Prickly Bay is $6,000/week.",
   mods:[
     { k:"Boat day", v:3, n:"sculpture-park schooner" },
@@ -343,6 +353,7 @@ const TRIPS = [
 
 { id:"barbados", name:"Barbados", region:"Platinum (west) coast, Barbados", status:"CONTENDER",
   cost:[1900,2700], scores:{ST:6,NL:8,AC:8,NV:7,VQ:9}, flight:"JFK 4h45 nonstop + the only CLT nonstop · ≈7–8h door-to-door",
+  temps:[86,76], travel:{nyc:"≈7–8h nonstop", atl:"≈9h · 1 stop", clt:"≈7–8h nonstop"},
   villa:"$750–1,200 a night for a staffed west-coast villa with the cook included — best value-for-quality on the board.",
   mods:[
     { k:"Boat day", v:3, n:"turtle + wreck catamaran" },
@@ -374,6 +385,7 @@ const TRIPS = [
 
 { id:"lakepowell", name:"Lake Powell Houseboat", region:"Antelope Point, Lake Powell, AZ", status:"CONTENDER",
   cost:[2600,2850], scores:{ST:10,NL:1,AC:7,NV:10,VQ:5}, flight:"Fly to Vegas + Contour hop to Page (Mon/Thu/Fri/Sun) · ≈9–12h door-to-door",
+  temps:[80,55], travel:{nyc:"≈9–12h · 2 legs", atl:"≈9–11h · 2 legs", clt:"≈9–12h · 2 legs"},
   villa:"The 75-ft houseboat is ~$13,100 for 5 days (an Aug–Oct 20%-off window is advertised) — six queen staterooms, 2.5 baths, and it\'s a boat. Costs more than a villa, but it replaces villa + boat + toys.",
   mods:[
     { k:"Boat day", v:3, n:"the boat IS the trip — every day" },
@@ -404,6 +416,7 @@ const TRIPS = [
 
 { id:"curacao", name:"Curaçao", region:"Jan Thiel / Willemstad, Curaçao", status:"MONITOR",
   cost:[2000,2600], scores:{C:8,F:7,W:8}, flight:"Thin nonstops — JFK 3x/week, Miami 2x/day",
+  temps:[89,79], travel:{nyc:"≈7h nonstop (3×/wk)", atl:"≈9h · 1 stop", clt:"≈9h · 1 stop"},
   mods:[
     { k:"Boat day", v:3, n:"Klein Curaçao" },
     { k:"Snorkeling", v:3, n:"best of the ABCs" }
@@ -425,6 +438,7 @@ const TRIPS = [
 
 { id:"roatan", name:"Roatán", region:"West Bay, Roatán, Honduras", status:"MONITOR",
   cost:[1900,2400], scores:{C:8,F:7,W:9}, flight:"AA Miami daily makes the Monday arrival easy",
+  temps:[88,77], travel:{nyc:"≈10–11h · 1 stop", atl:"≈9–10h · 1 stop", clt:"≈10–11h · 1 stop"},
   mods:[
     { k:"Boat day", v:3, n:"$1,250 private 50-ft cat" },
     { k:"Jet skis", v:2, n:"" },
@@ -700,7 +714,7 @@ const TRIPS = [
   const $ = s => document.querySelector(s);
   const statusColor = { CONTENDER:"var(--river)", MONITOR:"var(--pine)", CUT:"var(--ink-soft)", ARCHIVED:"var(--ink-soft)" };
   const SCORE_LABEL = { ST:"Storm-risk", NL:"Nightlife", AC:"Activities", NV:"Novelty", VQ:"Villa quality",
-                        C:"Comfort", F:"Fun", W:"Water", A:"Adventure", S:"Skill" };
+                        A:"Adventure", F:"Fun", S:"Skill" };
   const money = n => "$" + n.toLocaleString();
   const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
   document.getElementById("updated").textContent = CONFIG.UPDATED;
@@ -781,6 +795,15 @@ const TRIPS = [
         '</div>' +
       '</div>';
 
+    if (t.temps && t.travel){
+      html += '<div class="stats">' +
+        '<div class="stat"><span class="k">Late-Sept temps</span><b>~'+t.temps[0]+'° / '+t.temps[1]+'°F</b></div>' +
+        '<div class="stat"><span class="k">From NYC</span><b>'+esc(t.travel.nyc)+'</b></div>' +
+        '<div class="stat"><span class="k">From ATL</span><b>'+esc(t.travel.atl)+'</b></div>' +
+        '<div class="stat"><span class="k">From CLT</span><b>'+esc(t.travel.clt)+'</b></div>' +
+      '</div>';
+    }
+
     if (hasPhotos){
       html +=
         '<figure class="v-photo">' +
@@ -805,12 +828,24 @@ const TRIPS = [
         '<p class="scorenote">●●● = strong here &nbsp;·&nbsp; ●○○ = thin / with caveats &nbsp;·&nbsp; — = not really a thing here</p></div>';
     }
 
-    const isNewRubric = "ST" in t.scores;
-    const gauges =
-      '<div class="v-sec" style="--status:'+col+'"><h3>How it scores</h3>' +
-        Object.keys(t.scores).map(k => gaugeRow(SCORE_LABEL[k] || k, t.scores[k], col)).join("") +
-        (isNewRubric ? '<p class="scorenote">Higher is better on every bar — storm-risk is scored as safety (10 = zero storm exposure).</p>' : '') +
-      '</div>';
+    // Sliders render only for scored rubrics: the five-dimension scorecard (contenders)
+    // and the adventure-era A/F/S (archive record). Monitors/cuts get a note, not bars.
+    const rubric = "ST" in t.scores ? "board" : ("A" in t.scores ? "archive" : "none");
+    let gauges;
+    if (rubric === "none"){
+      const note = t.status === "CUT"
+        ? 'Cut before the scorecard round — the reason is the first item under "Good to know."'
+        : "Not on the scorecard — the five dimensions rank the six contenders. This one gets scored if it promotes.";
+      gauges = '<div class="v-sec"><h3>How it scores</h3><p class="scorenote">'+note+'</p></div>';
+    } else {
+      gauges =
+        '<div class="v-sec" style="--status:'+col+'"><h3>How it scores</h3>' +
+          Object.keys(t.scores).map(k => gaugeRow(SCORE_LABEL[k] || k, t.scores[k], col)).join("") +
+          (rubric === "board"
+            ? '<p class="scorenote">Higher is better on every bar — storm-risk is scored as safety (10 = zero storm exposure).</p>'
+            : '<p class="scorenote">Adventure-era rubric, kept for the record.</p>') +
+        '</div>';
+    }
 
     const prosCons = (t.pros && t.cons)
       ? '<div class="v-sec"><h3>For / against</h3><div class="pc">' +
@@ -932,16 +967,21 @@ const TRIPS = [
     const el = $("#compare");
     el.classList.toggle("show", compareOn);
     if (!compareOn) return;
-    el.innerHTML = '<table><thead><tr><th>Option</th><th>Status</th><th>Cost / person</th><th>Scores</th><th>Total</th><th>Requirements</th></tr></thead><tbody>' +
+    const DIMS = ["ST","NL","AC","NV","VQ"];
+    el.innerHTML = '<table><thead><tr><th>Option</th><th>Status</th><th>Cost / person</th>' +
+      '<th>Storm-risk</th><th>Nightlife</th><th>Activities</th><th>Novelty</th><th>Villa</th><th>Total</th><th>Requirements</th></tr></thead><tbody>' +
       vis().map(t => {
-        const total = "ST" in t.scores ? Object.values(t.scores).reduce((a,b)=>a+b,0) : null;
+        const scored = "ST" in t.scores;
+        const total = scored ? DIMS.reduce((a,k)=>a+t.scores[k],0) : null;
         return '<tr><td><b>'+esc(t.name)+'</b><br><span style="font-family:var(--mono);font-size:11px;color:var(--ink-soft)">'+esc(t.region)+'</span></td>' +
         '<td class="mono" style="color:'+statusColor[t.status]+'">'+t.status+'</td>' +
         '<td class="mono">'+money(t.cost[0])+'–'+money(t.cost[1])+'</td>' +
-        '<td class="mono">'+Object.keys(t.scores).map(k => k+' '+t.scores[k]).join(" · ")+'</td>' +
+        DIMS.map(k => '<td class="mono">'+(scored ? t.scores[k] : "—")+'</td>').join("") +
         '<td class="mono">'+(total !== null ? '<b>'+total+'</b>' : '—')+'</td>' +
         '<td>'+t.gates.map(esc).join(" · ")+'</td></tr>';
-      }).join("") + '</tbody></table>';
+      }).join("") +
+      '</tbody></table>' +
+      '<p class="scorenote">Storm-risk is scored as safety (10 = zero storm exposure). Monitors, cuts, and the archive aren\'t on the scorecard.</p>';
   }
 
   /* ---- boot ---- */
