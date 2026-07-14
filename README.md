@@ -6,7 +6,7 @@ Static site, two standalone pages, no build step:
 - **`destination-choices/index.html`** — the destination-options page for the decision: the current shortlist with photos, day/night outlines, costs, scores, and trade-offs, in a carousel layout, plus the earlier archived list behind an Archive toggle. Passphrase-gated on top of an unlisted URL; not linked from anywhere.
 
 ## Deploy (GitHub Pages)
-Settings → Pages → Source: "Deploy from a branch" → pick the branch, folder `/ (root)` → Save.
+Settings → Pages → Source: "Deploy from a branch" → branch `claude/bachelor-trip-website-5nm5m3` (the default branch), folder `/ (root)` → Save. Not yet enabled as of July 10, 2026.
 Site: `https://arathie.github.io/jaipal-bachelor-trip/` (live in ~1 minute). The options page deploys with it at its own path.
 
 ## Privacy model — read this before sharing links
